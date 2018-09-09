@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2018 at 04:53 AM
+-- Generation Time: Sep 09, 2018 at 05:46 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -54,7 +54,8 @@ INSERT INTO `attendance` (`attendance_id`, `date`, `userID`, `shiftID`) VALUES
 CREATE TABLE `package` (
   `package_id` int(20) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `fees` varchar(225) NOT NULL,
+  `fees` varchar(20) NOT NULL,
+  `duration` varchar(50) NOT NULL,
   `description` varchar(225) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -62,8 +63,9 @@ CREATE TABLE `package` (
 -- Dumping data for table `package`
 --
 
-INSERT INTO `package` (`package_id`, `name`, `fees`, `description`) VALUES
-(1, 'month package', '200', 'cardio package');
+INSERT INTO `package` (`package_id`, `name`, `fees`, `duration`, `description`) VALUES
+(1, 'Golden package', '200', 'monthly', 'eft7 brackets w 7ot omnyatek w seb el bracket mfto7 :v'),
+(2, 'normal package', '500', 'yearly', 'kol sana wad7a y3ni :v');
 
 -- --------------------------------------------------------
 
@@ -73,8 +75,7 @@ INSERT INTO `package` (`package_id`, `name`, `fees`, `description`) VALUES
 
 CREATE TABLE `payment` (
   `payment_id` int(20) NOT NULL,
-  `date` date NOT NULL,
-  `amount` varchar(225) NOT NULL,
+  `first_payment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `userID` int(11) NOT NULL,
   `packageID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -83,8 +84,8 @@ CREATE TABLE `payment` (
 -- Dumping data for table `payment`
 --
 
-INSERT INTO `payment` (`payment_id`, `date`, `amount`, `userID`, `packageID`) VALUES
-(1, '2018-09-03', '200', 1, 1);
+INSERT INTO `payment` (`payment_id`, `first_payment_date`, `userID`, `packageID`) VALUES
+(1, '2018-09-09 03:14:54', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -138,15 +139,21 @@ INSERT INTO `trainers` (`trainer_id`, `name`, `age`, `mobile`) VALUES
 CREATE TABLE `users` (
   `userId` int(20) NOT NULL,
   `user_name` varchar(50) NOT NULL,
-  `mobile` varchar(20) NOT NULL
+  `mobile` varchar(20) NOT NULL,
+  `paid_amount` varchar(50) NOT NULL,
+  `due_amount` varchar(50) NOT NULL,
+  `payment_status` varchar(50) NOT NULL,
+  `membership_start_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `membership_end_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `pakageID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userId`, `user_name`, `mobile`) VALUES
-(1, 'bla ', '0128335028');
+INSERT INTO `users` (`userId`, `user_name`, `mobile`, `paid_amount`, `due_amount`, `payment_status`, `membership_start_date`, `membership_end_date`, `pakageID`) VALUES
+(1, 'bla ', '0128335028', '200', '0', 'fully paid', '2018-09-09 03:36:10', '2018-10-08 22:00:00', 1);
 
 --
 -- Indexes for dumped tables
@@ -171,8 +178,7 @@ ALTER TABLE `package`
 --
 ALTER TABLE `payment`
   ADD PRIMARY KEY (`payment_id`),
-  ADD KEY `userID` (`userID`),
-  ADD KEY `packageID` (`packageID`);
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indexes for table `shift`
@@ -191,7 +197,8 @@ ALTER TABLE `trainers`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`userId`);
+  ADD PRIMARY KEY (`userId`),
+  ADD KEY `pakageID` (`pakageID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -207,7 +214,7 @@ ALTER TABLE `attendance`
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `package_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `package_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -256,6 +263,12 @@ ALTER TABLE `payment`
 --
 ALTER TABLE `shift`
   ADD CONSTRAINT `shift_ibfk_1` FOREIGN KEY (`trainerID`) REFERENCES `trainers` (`trainer_id`);
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`pakageID`) REFERENCES `package` (`package_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
