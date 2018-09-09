@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 07, 2018 at 09:33 PM
+-- Generation Time: Sep 09, 2018 at 04:53 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `attendance` (
   `attendance_id` int(20) NOT NULL,
-  `date` date NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `userID` int(20) NOT NULL,
   `shiftID` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -40,10 +40,10 @@ CREATE TABLE `attendance` (
 --
 
 INSERT INTO `attendance` (`attendance_id`, `date`, `userID`, `shiftID`) VALUES
-(2, '2018-09-04', 1, 1),
-(3, '2018-09-04', 1, 1),
-(4, '2018-09-12', 1, 1),
-(10, '2018-09-05', 1, 1);
+(2, '2018-09-14 22:00:00', 1, 2),
+(3, '2018-09-14 22:00:00', 1, 2),
+(4, '2018-09-14 22:00:00', 1, 2),
+(11, '2018-09-14 22:00:00', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -105,7 +105,8 @@ CREATE TABLE `shift` (
 --
 
 INSERT INTO `shift` (`shiftId`, `shift_name`, `start_time`, `end_time`, `trainerID`) VALUES
-(1, 'morning shift', '04:00:00', '05:00:00', 1);
+(1, 'morning shift', '04:00:00', '05:00:00', 1),
+(2, 'afternoon shift', '07:00:00', '10:00:00', 2);
 
 -- --------------------------------------------------------
 
@@ -125,7 +126,8 @@ CREATE TABLE `trainers` (
 --
 
 INSERT INTO `trainers` (`trainer_id`, `name`, `age`, `mobile`) VALUES
-(1, 'm7md', '23', '01285507936');
+(1, 'm7md', '23', '01285507936'),
+(2, 'bl7a', '23', '01256895656');
 
 -- --------------------------------------------------------
 
@@ -144,7 +146,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userId`, `user_name`, `mobile`) VALUES
-(1, 'salma elsayed', '01285507936');
+(1, 'bla ', '0128335028');
 
 --
 -- Indexes for dumped tables
@@ -199,7 +201,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `attendance_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `attendance_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `package`
@@ -217,19 +219,19 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `shift`
 --
 ALTER TABLE `shift`
-  MODIFY `shiftId` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `shiftId` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `trainers`
 --
 ALTER TABLE `trainers`
-  MODIFY `trainer_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `trainer_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userId` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `userId` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
