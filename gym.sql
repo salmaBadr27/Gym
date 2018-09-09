@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2018 at 05:46 AM
+-- Generation Time: Sep 09, 2018 at 08:08 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -75,17 +75,19 @@ INSERT INTO `package` (`package_id`, `name`, `fees`, `duration`, `description`) 
 
 CREATE TABLE `payment` (
   `payment_id` int(20) NOT NULL,
-  `first_payment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `userID` int(11) NOT NULL,
-  `packageID` int(11) NOT NULL
+  `related_package_id` int(11) DEFAULT NULL,
+  `related_payment_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `payment`
 --
 
-INSERT INTO `payment` (`payment_id`, `first_payment_date`, `userID`, `packageID`) VALUES
-(1, '2018-09-09 03:14:54', 1, 1);
+INSERT INTO `payment` (`payment_id`, `userID`, `related_package_id`, `related_payment_id`) VALUES
+(1, 1, 1, NULL),
+(2, 1, NULL, 3),
+(3, 1, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -140,11 +142,6 @@ CREATE TABLE `users` (
   `userId` int(20) NOT NULL,
   `user_name` varchar(50) NOT NULL,
   `mobile` varchar(20) NOT NULL,
-  `paid_amount` varchar(50) NOT NULL,
-  `due_amount` varchar(50) NOT NULL,
-  `payment_status` varchar(50) NOT NULL,
-  `membership_start_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `membership_end_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `pakageID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -152,8 +149,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userId`, `user_name`, `mobile`, `paid_amount`, `due_amount`, `payment_status`, `membership_start_date`, `membership_end_date`, `pakageID`) VALUES
-(1, 'bla ', '0128335028', '200', '0', 'fully paid', '2018-09-09 03:36:10', '2018-10-08 22:00:00', 1);
+INSERT INTO `users` (`userId`, `user_name`, `mobile`, `pakageID`) VALUES
+(1, 'bla ', '0128335028', 1);
 
 --
 -- Indexes for dumped tables
@@ -178,7 +175,9 @@ ALTER TABLE `package`
 --
 ALTER TABLE `payment`
   ADD PRIMARY KEY (`payment_id`),
-  ADD KEY `userID` (`userID`);
+  ADD KEY `userID` (`userID`),
+  ADD KEY `packageID` (`related_package_id`),
+  ADD KEY `related_payment_id` (`related_payment_id`);
 
 --
 -- Indexes for table `shift`
@@ -220,7 +219,7 @@ ALTER TABLE `package`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `payment_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `shift`
@@ -256,7 +255,8 @@ ALTER TABLE `attendance`
 --
 ALTER TABLE `payment`
   ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userId`),
-  ADD CONSTRAINT `payment_ibfk_2` FOREIGN KEY (`packageID`) REFERENCES `package` (`package_id`);
+  ADD CONSTRAINT `payment_ibfk_2` FOREIGN KEY (`related_package_id`) REFERENCES `package` (`package_id`),
+  ADD CONSTRAINT `payment_ibfk_3` FOREIGN KEY (`related_payment_id`) REFERENCES `payment` (`payment_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `shift`
