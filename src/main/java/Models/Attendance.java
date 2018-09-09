@@ -1,7 +1,8 @@
 package Models;
 
 import java.sql.Time;
-import java.util.Date;
+import java.sql.Timestamp;
+
 
 public class Attendance {
 
@@ -10,9 +11,9 @@ public class Attendance {
     private Time startTime;
     private Time endTime;
     private String shiftName;
-    private Date attendanceDate;
+    private Timestamp attendanceDate;
 
-    public Attendance(int attendanceId, String userName, Time startTime, Time endTime, String shiftName, Date attendanceDate) {
+    public Attendance(int attendanceId, String userName, Time startTime, Time endTime, String shiftName, Timestamp attendanceDate) {
         this.attendanceId = attendanceId;
         this.userName = userName;
         this.startTime = startTime;
@@ -41,13 +42,15 @@ public class Attendance {
         return shiftName;
     }
 
-    public Date getAttendanceDate() {
+    public Timestamp getAttendanceDate() {
         return attendanceDate;
     }
 
     @Override
     public String toString() {
         return "Attendance{" + "attendanceId=" + attendanceId + ", userName=" + userName + ", startTime=" + startTime + ", endTime=" + endTime + ", shiftName=" + shiftName + ", attendanceDate=" + attendanceDate + '}';
+    }
+
     }
 
 
@@ -64,4 +67,4 @@ public class Attendance {
   
 
 
-}
+
