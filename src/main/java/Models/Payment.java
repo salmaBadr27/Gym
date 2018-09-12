@@ -1,41 +1,53 @@
 package Models;
 
-import java.util.Date;
-
 public class Payment {
 
     private int paymentId;
-    private Date paymentDate;
-    private String paymentAmount;
-    private String description;
+    private int userId;
+    private int relatedPackageId;
+    private int relatedPaymentId;
+        private float paidAmount;
 
-    public Payment(int paymentId, Date paymentDate, String paymentAmount, String description) {
+    public Payment(int paymentId, int userId, int relatedPackageId, int relatedPaymentId, float paidAmount) {
         this.paymentId = paymentId;
-        this.paymentDate = paymentDate;
-        this.paymentAmount = paymentAmount;
-        this.description = description;
+        this.userId = userId;
+        this.relatedPackageId = relatedPackageId;
+        this.relatedPaymentId = relatedPaymentId;
+        this.paidAmount = paidAmount;
     }
 
-    
     public int getPaymentId() {
         return paymentId;
     }
 
-    public Date getPaymentDate() {
-        return paymentDate;
+    public int getUserId() {
+        return userId;
     }
 
-    public String getPaymentAmount() {
-        return paymentAmount;
+    public int getRelatedPackageId() {
+        return relatedPackageId;
     }
 
-    public String getDescription() {
-        return description;
+    public int getRelatedPaymentId() {
+        return relatedPaymentId;
+    }
+
+    public float getPaidAmount() {
+        return paidAmount;
     }
 
     @Override
     public String toString() {
-        return "Payment{" + "paymentId=" + paymentId + ", paymentDate=" + paymentDate + ", paymentAmount=" + paymentAmount + ", description=" + description + '}';
+        return "Payment{" + "paymentId=" + paymentId + ", userId=" + userId + ", relatedPackageId=" + relatedPackageId + ", relatedPaymentId=" + relatedPaymentId + ", paidAmount=" + paidAmount + '}';
     }
+
+
+
+
+    
+    
+ 
+
+
 
 }

@@ -7,10 +7,16 @@ abstract public class UserRepository {
 
     abstract public ArrayList<Users> getAllUsers();
 
-    abstract public Users addUser(String userName, String password);
+    abstract public Users getUserById(int id);
 
-    abstract public Users updatetUser(int id , String userName , String mobile);
+    abstract public Users getUserByUserName(String userName);
+
+    abstract public Users addUser(Users newUser);
+
+    abstract public Users updatetUser(int id, Users newUserInfo);
 
     abstract public Users removeUser(int id);
+
+    abstract public String getUpdatedValue(boolean condition, String newValue, String columnName);
 
 }

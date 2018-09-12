@@ -12,8 +12,12 @@ public class Users {
         this.mobile = mobile;
     }
 
+    public Users(String userName, String mobile) {
+        this.userName = userName;
+        this.mobile = mobile;
+    }
+
    
-    
     
     public int getUserId() {
         return userId;
