@@ -6,7 +6,7 @@ public class Payment {
     private int userId;
     private int relatedPackageId;
     private int relatedPaymentId;
-        private float paidAmount;
+    private float paidAmount;
 
     public Payment(int paymentId, int userId, int relatedPackageId, int relatedPaymentId, float paidAmount) {
         this.paymentId = paymentId;

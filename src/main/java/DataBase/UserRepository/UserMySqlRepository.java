@@ -72,8 +72,13 @@ public class UserMySqlRepository extends UserRepository {
         try {
             boolean newNameCondition = !(oldUser.getUserName().equals(newUserInfo.getUserName()));
             boolean newmobCondition = !(oldUser.getMobile().equals(newUserInfo.getMobile()));
-            String updateQuery = "update users set "+ getUpdatedValue(newNameCondition, newUserInfo.getUserName(), "user_name")+"where userId ='"+id+"'";
-//                    +getUpdatedValue(newmobCondition, newUserInfo.getMobile(), "mobile");
+            String updateQuery = "update users set "
+                     +getUpdatedValue(newNameCondition, newUserInfo.getUserName(),"user_name")
+                     +","
+                     +getUpdatedValue(newmobCondition, newUserInfo.getMobile(),"mobile")
+                     +" where userId = "
+                     +id+
+                     +'"';
             statement.executeUpdate(updateQuery);
             return new Users (id , newUserInfo.getUserName(),newUserInfo.getMobile());
         } catch (SQLException ex) {
@@ -137,7 +142,7 @@ public class UserMySqlRepository extends UserRepository {
     public String getUpdatedValue(boolean condition, String newValue, String columnName) {
         try {
             if (condition) {
-                return (" set"+" "+ columnName + "='" + newValue + "'");
+                return "`"+columnName+"`"+ "='" + newValue+"'"  ;
             }
         } catch (Exception e) {
             System.out.print("error" + e);
