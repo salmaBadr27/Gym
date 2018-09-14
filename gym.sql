@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 11, 2018 at 11:38 PM
+-- Generation Time: Sep 14, 2018 at 04:23 PM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `gym`
+-- Database: `gym_sys`
 --
 
 -- --------------------------------------------------------
@@ -27,22 +27,23 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `attendance`
 --
+
 CREATE TABLE `attendance` (
   `attendance_id` int(20) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `userID` int(20) NOT NULL,
-  `shiftID` int(20) NOT NULL
+  `userID` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `attendance`
 --
 
-INSERT INTO `attendance` (`attendance_id`, `date`, `userID`, `shiftID`) VALUES
-(2, '2018-09-14 22:00:00', 1, 2),
-(3, '2018-09-14 22:00:00', 1, 2),
-(4, '2018-09-14 22:00:00', 1, 2),
-(11, '2018-09-14 22:00:00', 1, 2);
+INSERT INTO `attendance` (`attendance_id`, `date`, `userID`) VALUES
+(2, '2018-09-14 22:00:00', 1),
+(3, '2018-09-14 22:00:00', 1),
+(4, '2018-09-14 22:00:00', 1),
+(11, '2018-09-14 22:00:00', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -154,6 +155,13 @@ INSERT INTO `users` (`userId`, `user_name`, `mobile`) VALUES
 --
 
 --
+-- Indexes for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD PRIMARY KEY (`attendance_id`),
+  ADD KEY `userID` (`userID`);
+
+--
 -- Indexes for table `package`
 --
 ALTER TABLE `package`
@@ -223,6 +231,12 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userId`);
 
 --
 -- Constraints for table `payment`
